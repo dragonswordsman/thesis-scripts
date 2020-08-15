@@ -20,12 +20,12 @@ DEFAULT_SIM_JOBS = 4
 
 def get_arguments():
     """Parse rungem5 arguments."""
-    parser = argparse.ArgumentParser(description='Run gem5 full-system.')
+    parser = argparse.ArgumentParser(description='Run gem5 full-system.') # 需要import argparse，使用argparse的第一步就是创建一个 ArgumentParser 对象
     subparsers = parser.add_subparsers(
         title='action',
         dest='action',
         help='action to perform'
-    )
+    ) # 程序需要将功能拆分成子命令，如后面的info，boot等
     subparsers.required = True
 
     # generic options
@@ -40,7 +40,7 @@ def get_arguments():
         '--env-file',
         default=argparse.SUPPRESS,
         help='''script file frow where to load environment variables'''
-    )
+    )  #.SUPPRESS表示该对象不会出现在帮助信息中
     parser.add_argument(
         '--gem5-path',
         default=argparse.SUPPRESS,
@@ -233,7 +233,7 @@ def get_arguments():
 
     return parser.parse_args()
 
-
+#正式部分
 def load_env(args):
     """Loads the .env file, if any was passed or .env is detected."""
     # Passed env_file is priority. Overrides environment vars.
@@ -262,12 +262,12 @@ def get_paths(args):
     """
     Get gem5 paths, from environment or cli arguments.
 
-    Priorities: cli args > .env arg > environment > default .env
+    Priorities: cli args > .env arg > environment > default .env #命令行的优先级最高
     """
     paths = {}
 
     # Environment paths
-    # (description, arg, env, path)
+    # (description, arg, env, path)格式
     req_paths = [
         ("gem5 root dir", 'gem5_path', 'GEM5_PATH', 'GEM5'),
         ("full-system files dir", 'm5_path', 'M5_PATH', 'M5'),
